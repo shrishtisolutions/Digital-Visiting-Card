@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Visiting Card - Details</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-icon" id="brandIcon">DC</div>
+          <div class="brand-text">
+            <div class="brand-name" id="primaryName">Your Name</div>
+            <div class="brand-company" id="companyName">Your Company</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="pages">
+        <!-- Quick links -->
+        <section class="card section-block">
+          <h2 class="section-title">Quick contact</h2>
+          <div class="quick-links">
+            <button class="chip-btn" id="detailsWhatsAppBtn">WhatsApp</button>
+            <button class="chip-btn" id="detailsPhoneBtn">Phone</button>
+            <button class="chip-btn" id="detailsEmailBtn">Email</button>
+            <button class="chip-btn" id="detailsWebsiteBtn">Website</button>
+          </div>
+        </section>
+
+        <!-- About us -->
+        <section class="card section-block">
+          <h2 class="section-title">About us</h2>
+          <div class="about-block">
+            <div class="about-row">
+              <span class="about-label">Company</span>
+              <span class="about-value" id="aboutCompany">Your Company</span>
+            </div>
+            <div class="about-row">
+              <span class="about-label">Nature of business</span>
+              <span class="about-value" id="aboutNature"
+                >CCTV & Security Solutions</span
+              >
+            </div>
+            <div class="about-row">
+              <span class="about-label">Our specialist</span>
+              <ul class="special-list" id="aboutSpecialties">
+                <li>Commercial & Home CCTV</li>
+                <li>Access control & attendance</li>
+                <li>Networking & surveillance</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Products & services -->
+        <section class="card section-block">
+          <h2 class="section-title">Products & services</h2>
+          <div class="product-list" id="productList">
+            <article class="product-item">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=250&fit=crop" alt="CCTV Camera Solutions" loading="lazy" />
+              </div>
+              <div class="product-text">
+                <h3 class="product-name">CCTV Camera Solutions</h3>
+                <p class="product-desc">
+                  Complete surveillance setup for homes, shops and offices.
+                </p>
+              </div>
+              <div class="product-actions">
+                <button class="chip-btn strong" type="button" data-product="CCTV Camera Solutions" data-image="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=450&fit=crop" data-download>
+                  Download card
+                </button>
+                <button class="chip-btn enquiry-btn" type="button" data-product="CCTV Camera Solutions" data-enquiry>
+                  Enquiry
+                </button>
+              </div>
+            </article>
+
+            <article class="product-item">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop" alt="Access Control" loading="lazy" />
+              </div>
+              <div class="product-text">
+                <h3 class="product-name">Access Control</h3>
+                <p class="product-desc">
+                  Biometric and RFID solutions for secure entry management.
+                </p>
+              </div>
+              <div class="product-actions">
+                <button class="chip-btn strong" type="button" data-product="Access Control" data-image="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=450&fit=crop" data-download>
+                  Download card
+                </button>
+                <button class="chip-btn enquiry-btn" type="button" data-product="Access Control" data-enquiry>
+                  Enquiry
+                </button>
+              </div>
+            </article>
+
+            <article class="product-item">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop" alt="Networking & Cabling" loading="lazy" />
+              </div>
+              <div class="product-text">
+                <h3 class="product-name">Networking & Cabling</h3>
+                <p class="product-desc">
+                  Structured cabling and network setup for businesses.
+                </p>
+              </div>
+              <div class="product-actions">
+                <button class="chip-btn strong" type="button" data-product="Networking & Cabling" data-image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=450&fit=crop" data-download>
+                  Download card
+                </button>
+                <button class="chip-btn enquiry-btn" type="button" data-product="Networking & Cabling" data-enquiry>
+                  Enquiry
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Enquiry form -->
+        <section class="card section-block">
+          <h2 class="section-title">Enquiry</h2>
+          <form id="enquiryForm" class="form">
+            <div class="field-row">
+              <label for="enqName">Name</label>
+              <input id="enqName" name="name" type="text" required />
+            </div>
+            <div class="field-row">
+              <label for="enqPhone">Phone</label>
+              <input id="enqPhone" name="phone" type="tel" required />
+            </div>
+            <div class="field-row">
+              <label for="enqEmail">Email</label>
+              <input id="enqEmail" name="email" type="email" />
+            </div>
+            <div class="field-row">
+              <label for="enqProduct">Product / service</label>
+              <input
+                id="enqProduct"
+                name="product"
+                type="text"
+                placeholder="e.g. CCTV for home"
+                required
+              />
+            </div>
+            <div class="field-row">
+              <label for="enqMessage">Details</label>
+              <textarea
+                id="enqMessage"
+                name="message"
+                rows="3"
+                placeholder="Share your requirement, location, quantity, etc."
+              ></textarea>
+            </div>
+            <button class="full-width-btn" type="submit">
+              Send enquiry (WhatsApp & Email)
+            </button>
+            <p class="helper-text" id="enquiryNote">
+              We will open WhatsApp and Email with your enquiry filled in. Just
+              press send.
+            </p>
+          </form>
+        </section>
+
+        <!-- Gallery -->
+        <section class="card section-block">
+          <h2 class="section-title">Gallery</h2>
+          <div class="gallery" id="galleryGrid">
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop" alt="CCTV Installation" loading="lazy" />
+            </div>
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop" alt="Security System" loading="lazy" />
+            </div>
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" alt="Surveillance Camera" loading="lazy" />
+            </div>
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=300&fit=crop" alt="Access Control" loading="lazy" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Feedback form -->
+        <section class="card section-block">
+          <h2 class="section-title">Feedback</h2>
+          <form id="feedbackForm" class="form">
+            <div class="field-row">
+              <label for="fbName">Name</label>
+              <input id="fbName" name="name" type="text" />
+            </div>
+            <div class="field-row">
+              <label for="fbRating">Rating (1–5)</label>
+              <input
+                id="fbRating"
+                name="rating"
+                type="number"
+                min="1"
+                max="5"
+              />
+            </div>
+            <div class="field-row">
+              <label for="fbComment">Feedback</label>
+              <textarea
+                id="fbComment"
+                name="comment"
+                rows="3"
+                placeholder="Your experience with our service."
+              ></textarea>
+            </div>
+            <button class="full-width-btn" type="submit">
+              Send feedback
+            </button>
+          </form>
+        </section>
+
+        <!-- QR code -->
+        <section class="card section-block">
+          <h2 class="section-title">QR code</h2>
+          <p class="helper-text">
+            Scan this QR to open this digital visiting card.
+          </p>
+          <div id="qrContainer" class="qr-container"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
