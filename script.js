@@ -1,24 +1,27 @@
 // Basic configuration - replace later with your real details
 const CONFIG = {
-  name: "Kavya M",
-  company: "Miss Technology",
-  role: "CCTV and Security Solutions",
-  phone: "+919943703573",
-  whatsapp: "+919943703573",
-  email: "kavyamurugan24@gmail.com",
+  name: "PUSHPARAJ",
+  company: "SHRISHTI SOLUTIONS",
+  role: "Technology Solutions & CCTV",
+  phone: "+919962883525",
+  whatsapp: "+919962883525",
+  whatsappAlt: "+919176187823",
+  email: "pushparaj@shrishtisolutions.in",
   website: "",
-  logo: "", // Optional: path to your logo image (e.g., "assets/logo.svg" or "assets/logo.png")
+  logo: "/images/products/shrishti-solutions-icon.jpg", // Optional: path to your logo image (e.g., "assets/logo.svg" or "assets/logo.png")
   address: {
-    line1: "52/1 vadakarai",
-    line2: "Theni",
-    line3: "",
+    line1: "27/13, Nedunchezian street",
+    line2: "MGR Nagar",
+    line3: "Chennai - 600078",
   },
   about: {
-    nature: "CCTV and security solution",
+    nature: "Technology & Security Solutions",
     specialties: [
-      "CCTV Camera Installation",
-      "Security Solutions",
-      "Surveillance Systems",
+      "Software services & IT equipment sales/support",
+      "CCTV surveillance systems & professional installation",
+      "Networking & cyber security solutions",
+      "Dependable after-sales service",
+      "Alt WhatsApp: +91 9176187823",
     ],
   },
 };
@@ -135,14 +138,26 @@ function wireMainActions() {
     });
   }
 
-  if (directionBtn) {
-    directionBtn.addEventListener("click", () => {
-      const addr = encodeURIComponent(
-        `${CONFIG.address.line1}, ${CONFIG.address.line2}, ${CONFIG.address.line3}`
-      );
-      window.open(`https://www.google.com/maps?q=${addr}`, "_blank");
-    });
-  }
+ const MAP_URL = "https://maps.app.goo.gl/x19QLYn3vYGRGiKD8";
+
+if (directionBtn) {
+  directionBtn.addEventListener("click", () => {
+
+    // 1️⃣ If map link exists → open it
+    if (MAP_URL && MAP_URL.trim() !== "") {
+      window.open(MAP_URL, "_blank");
+      return;
+    }
+
+    // 2️⃣ Fallback → open using address
+    const addr = encodeURIComponent(
+      `${CONFIG.address.line1}, ${CONFIG.address.line2}, ${CONFIG.address.line3}`
+    );
+
+    window.open(`https://www.google.com/maps?q=${addr}`, "_blank");
+  });
+}
+
 
   if (emailBtn) {
     emailBtn.addEventListener("click", () => {
@@ -213,46 +228,89 @@ function downloadVCard() {
     .filter(Boolean)
     .join(", ");
 
+  // Escape special characters in vCard format
+  function escapeVCard(str) {
+    if (!str) return "";
+    return str.replace(/[,;\\]/g, "\\$&").replace(/\n/g, "\\n");
+  }
+
   const vcardLines = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    `FN:${CONFIG.name}`,
-    `N:${CONFIG.name};;;;`,
-    `TEL;TYPE=CELL,VOICE:${CONFIG.phone}`,
-    `TEL;TYPE=CELL,VOICE:${CONFIG.whatsapp}`,
+    `FN:${escapeVCard(CONFIG.name)}`,
+    `N:${escapeVCard(CONFIG.name)};;;;`,
+    `ORG:${escapeVCard(CONFIG.company)}`,
+    `TEL;TYPE=CELL:${CONFIG.phone}`,
+    `TEL;TYPE=WHATSAPP:${CONFIG.whatsapp}`,
+
     `EMAIL;TYPE=INTERNET:${CONFIG.email}`,
     CONFIG.website ? `URL:${CONFIG.website}` : "",
-    fullAddress ? `ADR;TYPE=WORK:;;${fullAddress};;;;` : "",
+    fullAddress ? `ADR;TYPE=WORK:;;${escapeVCard(fullAddress)};;;;` : "",
     "END:VCARD",
   ].filter(Boolean);
 
-  const blob = new Blob([vcardLines.join("\r\n")], {
+  const vcardContent = vcardLines.join("\r\n");
+  
+  // Create blob with proper MIME type
+  const blob = new Blob([vcardContent], {
     type: "text/vcard;charset=utf-8",
   });
+  
+  const fileName = `${CONFIG.name.replace(/\s+/g, "_")}.vcf`;
   const url = URL.createObjectURL(blob);
+  
+  // Try Web Share API first (best for mobile)
+  if (navigator.share && navigator.canShare) {
+    const file = new File([blob], fileName, { type: "text/vcard" });
+    if (navigator.canShare({ files: [file] })) {
+      navigator.share({
+        files: [file],
+        title: `Add ${CONFIG.name} to contacts`,
+      }).catch(() => {
+        // Fallback to download if share fails
+        triggerDownload(url, fileName);
+      });
+      return;
+    }
+  }
+  
+  // Fallback: trigger download
+  triggerDownload(url, fileName);
+}
+
+function triggerDownload(url, fileName) {
   const link = document.createElement("a");
   link.href = url;
-  link.download = `${CONFIG.name.replace(/\s+/g, "_")}.vcf`;
+  link.download = fileName;
+  link.style.display = "none";
   document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  
+  // Clean up after a delay
+  setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, 100);
 }
 
 function wireEnquiryForm() {
-  const form = document.getElementById("enquiryForm");
-  if (!form) return;
+  const whatsappBtn = document.getElementById("enquiryWhatsAppBtn");
+  const emailBtn = document.getElementById("enquiryEmailBtn");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
+  function getEnquiryData() {
     const name = document.getElementById("enqName")?.value || "";
     const phone = document.getElementById("enqPhone")?.value || "";
     const email = document.getElementById("enqEmail")?.value || "";
     const product = document.getElementById("enqProduct")?.value || "";
     const message = document.getElementById("enqMessage")?.value || "";
 
-    const common = `New enquiry from digital visiting card
+    return {
+      name,
+      phone,
+      email,
+      product,
+      message,
+      formatted: `New enquiry from digital visiting card
 
 Name: ${name}
 Phone: ${phone}
@@ -260,18 +318,41 @@ Email: ${email}
 Product / Service: ${product}
 Details: ${message}
 
-Please follow up.`;
+Please follow up.`,
+    };
+  }
 
-    // WhatsApp
-    const waNum = CONFIG.whatsapp.replace(/[^\d]/g, "");
-    const waMsg = encodeURIComponent(common);
-    window.open(`https://wa.me/${waNum}?text=${waMsg}`, "_blank");
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener("click", () => {
+      const data = getEnquiryData();
+      
+      // Validate required fields
+      if (!data.name || !data.phone || !data.product) {
+        alert("Please fill in Name, Phone, and Product/Service fields.");
+        return;
+      }
 
-    // Email
-    const subject = encodeURIComponent("New enquiry from digital visiting card");
-    const body = encodeURIComponent(common);
-    window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
-  });
+      const waNum = CONFIG.whatsapp.replace(/[^\d]/g, "");
+      const waMsg = encodeURIComponent(data.formatted);
+      window.open(`https://wa.me/${waNum}?text=${waMsg}`, "_blank");
+    });
+  }
+
+  if (emailBtn) {
+    emailBtn.addEventListener("click", () => {
+      const data = getEnquiryData();
+      
+      // Validate required fields
+      if (!data.name || !data.phone || !data.product) {
+        alert("Please fill in Name, Phone, and Product/Service fields.");
+        return;
+      }
+
+      const subject = encodeURIComponent("New enquiry from digital visiting card");
+      const body = encodeURIComponent(data.formatted);
+      window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+    });
+  }
 }
 
 function wireFeedbackForm() {
@@ -473,6 +554,78 @@ function initTabs() {
     });
   });
 }
+
+
+// ===== Copy URL to Clipboard =====
+const copyBtn = document.getElementById("copyBtn");
+if (copyBtn) {
+  copyBtn.addEventListener("click", () => {
+    const urlInput = document.getElementById("shareUrl");
+    urlInput.select();
+    urlInput.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    alert("URL copied to clipboard!");
+  });
+}
+
+// ===== Save QR Code as Image =====
+const saveBtn = document.getElementById("saveBtn");
+if (saveBtn) {
+  saveBtn.addEventListener("click", () => {
+    const qrImg = document.querySelector("#qrContainer img");
+    if (qrImg) {
+      const link = document.createElement("a");
+      link.href = qrImg.src;
+      link.download = "qr-code.png";
+      link.click();
+    } else {
+      alert("QR code not generated yet!");
+    }
+  });
+}
+
+
+// ===== WhatsApp Share =====
+const whatsappShareBtn = document.getElementById("whatsappShareBtn");
+if (whatsappShareBtn) {
+  whatsappShareBtn.addEventListener("click", () => {
+    const countryCodeEl = document.getElementById("countryCode");
+    const numberEl = document.getElementById("whatsappNumber");
+    const shareUrlEl = document.getElementById("shareUrl");
+
+    const countryCode = countryCodeEl ? countryCodeEl.value.replace("+", "") : "";
+    const number = numberEl ? numberEl.value.trim() : "";
+    const url = shareUrlEl ? shareUrlEl.value : window.location.href;
+
+    if (!number) {
+      alert("Please enter a mobile number.");
+      return;
+    }
+
+    const whatsappUrl = `https://wa.me/${countryCode}${number}?text=${encodeURIComponent(url)}`;
+    window.open(whatsappUrl, "_blank");
+  });
+}
+
+
+// ===== Optional: Native Share Button =====
+const shareBtn = document.getElementById("shareBtn");
+if (shareBtn) {
+  shareBtn.addEventListener("click", () => {
+    const shareUrlEl = document.getElementById("shareUrl");
+    const url = shareUrlEl ? shareUrlEl.value : window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: "Digital Card",
+        url: url,
+      }).catch((err) => console.error("Share failed:", err));
+    } else {
+      alert("Sharing not supported on this device. Copy the URL manually.");
+    }
+  });
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   initBasicCard();

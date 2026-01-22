@@ -46,16 +46,49 @@ body {
 .brand-icon {
   width: 40px;
   height: 40px;
-  border-radius: 14px;
+  border-radius: 50%;
   background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
-  color: #0b1120;
-  box-shadow: 0 8px 18px rgba(56, 189, 248, 0.65);
+  overflow: hidden; /* clip extra parts of image */
 }
+
+.brand-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* keeps aspect ratio, fills the circle */
+  object-position: center; /* centers the image in the circle */
+  display: block;
+}
+
+
+.card-photo {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;       /* perfect circle */
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #22c55e,
+    #38bdf8,
+    #a855f7,
+    #22c55e
+  );
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;         /* 🔥 important */
+}
+
+.card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
 
 .brand-text {
   display: flex;
@@ -174,6 +207,8 @@ body {
 .card-photo img {
   background: transparent;
 }
+
+.card-photo span {
   font-size: 30px;
   font-weight: 700;
   color: #e5e7eb;
@@ -401,6 +436,31 @@ body {
   color: #9ca3af;
 }
 
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.enquiry-whatsapp-btn {
+  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4) !important;
+}
+
+.enquiry-whatsapp-btn:active {
+  box-shadow: 0 5px 14px rgba(37, 211, 102, 0.35) !important;
+}
+
+.enquiry-email-btn {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9) !important;
+  box-shadow: 0 10px 24px rgba(56, 189, 248, 0.4) !important;
+}
+
+.enquiry-email-btn:active {
+  box-shadow: 0 5px 14px rgba(56, 189, 248, 0.35) !important;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -498,4 +558,168 @@ body {
     margin: 20px;
   }
 }
+/* ================================
+   SHARE PAGE – MATCH APP THEME
+================================ */
+
+/* Remove old light styling */
+.share-card {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  font-family: inherit;
+}
+
+/* Use existing card look */
+.share-card .card {
+  background: linear-gradient(145deg, #020617, #0b1120);
+  border-radius: 20px;
+  padding: 18px 16px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.8);
+}
+
+/* Title same as other sections */
+.share-card .section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+/* URL input box */
+.url-box {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 🔥 important */
+  padding: 6px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.url-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #e5e7eb;
+  font-size: 13px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+/* COPY BUTTON */
+.url-copy-btn {
+  width: 40px;           /* 🔥 fixed size */
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;        /* 🔥 prevents collapsing */
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.url-copy-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: #e5e7eb;
+}
+
+.url-copy-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.url-copy-btn:hover svg {
+  fill: #38bdf8;
+}
+
+.url-copy-btn:active {
+  transform: scale(0.95);
+}
+
+
+
+/* Text labels */
+.qr-text,
+.whatsapp-text {
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 10px 0 6px;
+}
+
+/* QR container – reuse dark style */
+.share-card .qr-container {
+  margin: 10px auto 14px;
+  padding: 8px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+/* Buttons row */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #38bdf8, #22c55e);
+  color: #020617;
+  box-shadow: 0 10px 24px rgba(56, 189, 248, 0.4);
+}
+
+.action-buttons button:active {
+  transform: scale(0.97);
+}
+
+/* WhatsApp share row */
+.whatsapp-share {
+  display: flex;
+  gap: 6px;
+}
+
+.whatsapp-share select,
+.whatsapp-share input {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 12px;
+  padding: 8px;
+  color: #e5e7eb;
+  font-size: 13px;
+  outline: none;
+}
+
+.whatsapp-share button {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  border: none;
+  color: #02121a;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-share button:active {
+  transform: scale(0.97);
+}
+
+
+
 
