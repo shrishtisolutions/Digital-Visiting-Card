@@ -2,7 +2,7 @@
 const CONFIG = {
   name: "PUSHPARAJ",
   company: "SHRISHTI SOLUTIONS",
-  role: "TECHNICAL ARCHITECT",
+  role: "Technical Architect",
   phone: "+919962883525",
   whatsapp: "+919962883525",
   whatsappAlt: "+919176187823",
@@ -37,7 +37,10 @@ function initBasicCard() {
 
   if (nameEl) nameEl.textContent = CONFIG.name;
   if (brandNameEl) {
-    brandNameEl.textContent = `${CONFIG.name} – ${CONFIG.role}`;
+    brandNameEl.innerHTML = `
+      ${CONFIG.name}
+      <span class="brand-role">– ${CONFIG.role}</span>
+    `;
   }
   if (roleEl) roleEl.textContent = CONFIG.role;
   if (companyEl) companyEl.textContent = CONFIG.company;
