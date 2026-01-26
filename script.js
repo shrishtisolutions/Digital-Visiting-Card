@@ -26,7 +26,8 @@ const CONFIG = {
   },
 };
 
-const CARD_SHORT_URL = "https://shrishtisolutions.github.io/card";
+const CARD_SHORT_URL = "https://shrishtisolutions.github.io/pushparaj";
+
 
 
 
