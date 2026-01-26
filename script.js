@@ -609,8 +609,9 @@ if (whatsappShareBtn) {
     }
 
     const shareText =
-      "Digital Visiting Card - " + CONFIG.name + "\n\n" +
-      CARD_SHORT_URL;
+      `Digital Visiting Card - ${CONFIG.name}\n` +
+      `Technical Architect | Shrishti Solutions\n` +
+      `${CARD_SHORT_URL}`;
 
     const waUrl =
       "https://wa.me/" +
@@ -631,11 +632,11 @@ if (shareBtn) {
     if (navigator.share) {
       navigator.share({
         title: `Digital Visiting Card – ${CONFIG.name}`,
-        text: `Digital Visiting Card – ${CONFIG.name}`,
+        text: `Digital Visiting Card – ${CONFIG.name}\nTechnical Architect | Shrishti Solutions`,
         url: CARD_SHORT_URL,
       }).catch((err) => console.error("Share failed:", err));
     } else {
-      alert(`Copy and share:\n${CARD_SHORT_URL}`);
+      alert(`Copy and share:\nDigital Visiting Card – ${CONFIG.name}\nTechnical Architect | Shrishti Solutions\n${CARD_SHORT_URL}`);
     }
   });
 }
