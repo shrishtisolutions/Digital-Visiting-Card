@@ -2,7 +2,7 @@
 const CONFIG = {
   name: "PUSHPARAJ",
   company: "SHRISHTI SOLUTIONS",
-  role: "Technical Architect",
+  role: "TECHNICAL ARCHITECT",
   phone: "+919962883525",
   whatsapp: "+919962883525",
   whatsappAlt: "+919176187823",
