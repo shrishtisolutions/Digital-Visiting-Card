@@ -585,21 +585,95 @@ if (copyBtn) {
   });
 }
 
-// ===== Save QR Code as Image =====
+// ===== Save Full Visiting Card as Image =====
 const saveBtn = document.getElementById("saveBtn");
 if (saveBtn) {
-  saveBtn.addEventListener("click", () => {
-    const qrImg = document.querySelector("#qrContainer img");
-    if (qrImg) {
-      const link = document.createElement("a");
-      link.href = qrImg.src;
-      link.download = "qr-code.png";
-      link.click();
-    } else {
-      alert("QR code not generated yet!");
-    }
+  saveBtn.addEventListener("click", async () => {
+    const canvas = document.createElement("canvas");
+    const width = 800;
+    const height = 1000;
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+
+    // Background
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, "#020617");
+    gradient.addColorStop(1, "#0f172a");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Title
+    ctx.fillStyle = "#e5e7eb";
+    ctx.font = "bold 42px 'Segoe UI', system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("Digital Visiting Card", width / 2, 120);
+
+    // Name
+    ctx.fillStyle = "#38bdf8";
+    ctx.font = "bold 36px 'Segoe UI', system-ui";
+    ctx.fillText(CONFIG.name, width / 2, 180);
+
+    // Company / Role
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "22px 'Segoe UI', system-ui";
+    ctx.fillText(`${CONFIG.company} – ${CONFIG.role}`, width / 2, 230);
+
+    // Divider
+    ctx.strokeStyle = "#1f2937";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(100, 270);
+    ctx.lineTo(width - 100, 270);
+    ctx.stroke();
+
+    // Contact info
+    ctx.fillStyle = "#e5e7eb";
+    ctx.font = "24px 'Segoe UI', system-ui";
+    ctx.fillText(`📞 ${CONFIG.phone}`, width / 2, 340);
+    ctx.fillText(`💬 ${CONFIG.whatsapp}`, width / 2, 390);
+    ctx.fillText(`✉️ ${CONFIG.email}`, width / 2, 440);
+
+    // QR Code
+    const qrCanvas = document.createElement("div"); // QRCode library can render in div
+    const qrLink = document.getElementById("shareUrl")?.value?.trim() || CARD_SHORT_URL;
+
+    await new Promise((resolve) => {
+      const qr = new QRCode(qrCanvas, {
+        text: qrLink,
+        width: 240,
+        height: 240,
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+
+      // Poll until the img inside QRCode div is rendered
+      const checkQR = setInterval(() => {
+        const qrImg = qrCanvas.querySelector("img");
+        if (qrImg) {
+          clearInterval(checkQR);
+          // Draw QR onto main canvas
+          ctx.drawImage(qrImg, (width - 240) / 2, 520, 240, 240);
+          resolve();
+        }
+      }, 50);
+    });
+
+    // Footer
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "18px 'Segoe UI', system-ui";
+    ctx.fillText("Scan QR to view digital visiting card", width / 2, 800);
+
+    // Download
+    const dataUrl = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = `${CONFIG.name.replace(/\s+/g, "_")}_card.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
 }
+
 
 
 // ===== WhatsApp Share =====
