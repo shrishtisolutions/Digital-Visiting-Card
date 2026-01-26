@@ -519,15 +519,24 @@ function initQrCode() {
   const container = document.getElementById("qrContainer");
   if (!container || typeof QRCode === "undefined") return;
 
+  // Clear old QR code if it exists
   container.innerHTML = "";
-  const url = window.location.href;
 
+  
+  const urlInput = document.getElementById("shareUrl");
+  let qrLink = urlInput?.value?.trim() || CARD_SHORT_URL;
+
+  
+  qrLink += "?v=" + new Date().getTime();
+
+  // Generate QR code
   new QRCode(container, {
-    text: url,
+    text: qrLink,
     width: 140,
     height: 140,
   });
 }
+
 
 function initGallery() {
   const galleryItems = document.querySelectorAll(".gallery-item img");
