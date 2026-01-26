@@ -26,6 +26,9 @@ const CONFIG = {
   },
 };
 
+const CARD_SHORT_URL = "https://t.ly/pushparaj";
+
+
 function initBasicCard() {
   const nameEl = document.getElementById("cardName");
   const roleEl = document.getElementById("cardRole");
@@ -592,44 +595,51 @@ if (saveBtn) {
 
 // ===== WhatsApp Share =====
 const whatsappShareBtn = document.getElementById("whatsappShareBtn");
+
 if (whatsappShareBtn) {
   whatsappShareBtn.addEventListener("click", () => {
-    const countryCodeEl = document.getElementById("countryCode");
-    const numberEl = document.getElementById("whatsappNumber");
-    const shareUrlEl = document.getElementById("shareUrl");
-
-    const countryCode = countryCodeEl ? countryCodeEl.value.replace("+", "") : "";
-    const number = numberEl ? numberEl.value.trim() : "";
-    const url = shareUrlEl ? shareUrlEl.value : window.location.href;
+    const countryCode =
+      document.getElementById("countryCode")?.value.replace("+", "") || "";
+    const number =
+      document.getElementById("whatsappNumber")?.value.trim();
 
     if (!number) {
       alert("Please enter a mobile number.");
       return;
     }
 
-    const whatsappUrl = `https://wa.me/${countryCode}${number}?text=${encodeURIComponent(url)}`;
-    window.open(whatsappUrl, "_blank");
+    const shareText =
+      "Digital Visiting Card - " + CONFIG.name + "\n\n" +
+      CARD_SHORT_URL;
+
+    const waUrl =
+      "https://wa.me/" +
+      countryCode +
+      number +
+      "?text=" +
+      encodeURIComponent(shareText);
+
+    window.open(waUrl, "_blank");
   });
 }
 
-
-// ===== Optional: Native Share Button =====
+// ===== Native Share Button (FINAL) =====
 const shareBtn = document.getElementById("shareBtn");
+
 if (shareBtn) {
   shareBtn.addEventListener("click", () => {
-    const shareUrlEl = document.getElementById("shareUrl");
-    const url = shareUrlEl ? shareUrlEl.value : window.location.href;
-
     if (navigator.share) {
       navigator.share({
-        title: "Digital Card",
-        url: url,
+        title: `Digital Visiting Card – ${CONFIG.name}`,
+        text: `Digital Visiting Card – ${CONFIG.name}`,
+        url: CARD_SHORT_URL,
       }).catch((err) => console.error("Share failed:", err));
     } else {
-      alert("Sharing not supported on this device. Copy the URL manually.");
+      alert(`Copy and share:\n${CARD_SHORT_URL}`);
     }
   });
 }
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
