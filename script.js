@@ -36,7 +36,9 @@ function initBasicCard() {
   const cardPhotoEl = document.querySelector(".card-photo");
 
   if (nameEl) nameEl.textContent = CONFIG.name;
-  if (brandNameEl) brandNameEl.textContent = CONFIG.name;
+  if (brandNameEl) {
+    brandNameEl.textContent = `${CONFIG.name} – ${CONFIG.role}`;
+  }
   if (roleEl) roleEl.textContent = CONFIG.role;
   if (companyEl) companyEl.textContent = CONFIG.company;
 
