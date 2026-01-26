@@ -305,7 +305,23 @@ body {
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(56, 189, 248, 0.4);
   transition: transform 0.08s ease, box-shadow 0.14s ease;
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  text-decoration: none; 
 }
+
+.full-width-btn span.arrow {
+  transition: margin-left 0.2s ease;
+}
+
+.full-width-btn:hover span.arrow {
+  margin-left: 4px;
+}
+
 
 .full-width-btn:active {
   transform: translateY(1px);
